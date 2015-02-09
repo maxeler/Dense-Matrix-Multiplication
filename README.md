@@ -1,1 +1,1 @@
-# Dense-Matrix-Multiplication
+# Dense Matrix Multiplication
