@@ -1,0 +1,57 @@
+package gemm;
+
+import maxpower.blas.l3.TileMultiplierKernel;
+
+import com.maxeler.maxcompiler.v2.kernelcompiler._KernelConfiguration;
+import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEType;
+import com.maxeler.maxcompiler.v2.managers.BuildConfig;
+import com.maxeler.maxcompiler.v2.managers.BuildConfig.Effort;
+import com.maxeler.maxcompiler.v2.managers.BuildConfig.OptimizationTechnique;
+import com.maxeler.maxcompiler.v2.managers.custom.CustomManager;
+import com.maxeler.maxcompiler.v2.managers.custom.DFELink;
+import com.maxeler.maxcompiler.v2.managers.custom.stdlib.DebugLevel;
+
+public class GemmManager extends CustomManager {
+	public GemmManager(GemmEngineParameters params) {
+		super(params);
+		configBuild(params);
+
+		DFEType type = params.getFloatingPointType();
+
+		int tileSize = params.getTileSize();
+
+		addMaxFileConstant("tileSize", tileSize);
+		addMaxFileConstant("frequency", params.getFrequency());
+
+		DFELink a = addStreamFromCPU("A");
+		DFELink b = addStreamFromCPU("B");
+
+		addStreamToCPU("C") <== TileMultiplierKernel.multiplyTiles(this, "TM", type, tileSize, a, b);
+	}
+
+	private void configBuild(GemmEngineParameters params) {
+		BuildConfig buildConfig = getBuildConfig();
+		buildConfig.setMPPRCostTableSearchRange(params.getMPPRStartCT(), params.getMPPREndCT());
+		buildConfig.setMPPRParallelism(params.getMPPRThreads());
+		buildConfig.setMPPRRetryNearMissesThreshold(params.getMPPRRetryThreshold());
+		buildConfig.setOptimizationGoal(OptimizationTechnique.AREA);
+		buildConfig.setBuildEffort(Effort.VERY_HIGH);
+
+		config.setDefaultStreamClockFrequency(params.getFrequency());
+
+		setParameter("quartus_cdb.ram_usage", "10000");
+		setParameter("quartus_fit.ram_usage", "32000");
+		setParameter("quartus_sta.ram_usage", "24000");
+
+		DebugLevel dbg = new DebugLevel();
+		dbg.setHasStreamStatus(params.hasStreamStatus());
+		debug.setDebugLevel(dbg);
+
+		getCurrentKernelConfig().optimization.setConditionalArithmeticEnabled(true);
+		_KernelConfiguration.getPhotonKernelConfig(getCurrentKernelConfig()).optimizations().setBetterRegisteringEnabled(true);
+	}
+
+	public static void main(String[] args) {
+		new GemmManager(new GemmEngineParameters(args)).build();
+	}
+}
