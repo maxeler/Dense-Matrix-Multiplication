@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<maxCompilerManager version="2">
+<enginePart internalEngineSubproject="Dense-Matrix-Multiplication_EngineCode" isSrcBin="false" isUseDefaultSelected="false" outputLocation="/Dense-Matrix-Multiplication_EngineCode/bin" projectName="Dense-Matrix-Multiplication"/>
+<cpuPart internalCpuSubproject="Dense-Matrix-Multiplication_CPUCode"/>
+<watchedFiles/>
+</maxCompilerManager>
