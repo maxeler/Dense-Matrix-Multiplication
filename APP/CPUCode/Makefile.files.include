@@ -1,0 +1,5 @@
+#
+# This file is managed by MaxIDE. Do NOT change.
+#
+HEADERS:= Library/include/dgemm.h 
+SOURCES:= Example/src/dgemm_example.c Library/src/dgemm.c 

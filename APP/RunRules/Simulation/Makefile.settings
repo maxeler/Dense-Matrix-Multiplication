@@ -1,0 +1,17 @@
+# --- User's custom definitions
+USE_SLIC:=1
+# ---
+
+MAXCOMPILER_QUOTE   := $(shell printf %q "$(MAXCOMPILERDIR)")
+
+RUNRULE_ARGS        := 32
+RUNRULE_RUNENV      := MAXELEROSDIR="$(MAXCOMPILERDIR)/lib/maxeleros-sim" LD_LIBRARY_PATH="$(MAXCOMPILERDIR)/lib/maxeleros-sim/lib:$$LD_LIBRARY_PATH" SLIC_CONF="use_simulation=DenseMatrixMul;"  
+RUNRULE_MAXFILES    := DGEMM.max  
+RUNRULE_MAXFILES_H  := DGEMM.h 
+RUNRULE_CFLAGS      := 
+RUNRULE_LDFLAGS     := 
+
+TARGET_EXEC         := DGEMM
+TARGET_LIBRARY      := 
+
+

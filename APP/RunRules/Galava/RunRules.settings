@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<buildProfile>
+<common>
+<boardModel type="GALAVA"/>
+<simulation enabled="false"/>
+<enableMPCX enabled="false"/>
+</common>
+<maxFiles>
+<maxFile buildName="DGEMM" buildOrUseExisting="build">
+<runConfiguration askBeforeAutoBuild="true">
+<mainClass>gemm.GemmManager</mainClass>
+<maxHeapSize>2</maxHeapSize>
+<programArgument argument="frequency" value="150"/>
+<programArgument argument="MPPRStartCT" value="1"/>
+<programArgument argument="MPPREndCT" value="8"/>
+<programArgument argument="MPPRThreads" value="2"/>
+</runConfiguration>
+<selectEngineTarget enabled="false">VECTIS</selectEngineTarget>
+<overrideEnableMPCX enabled="false" value="false"/>
+</maxFile>
+</maxFiles>
+<cpuCode targetType="executable">
+<libraryName/>
+<exeName>DGEMM</exeName>
+<skin>
+<ancillaryReleaseInformation enabled="false">
+<dir name=""/>
+</ancillaryReleaseInformation>
+</skin>
+<arguments/>
+<remoteExecution enabled="false">
+<remoteMachineName/>
+<scriptName/>
+</remoteExecution>
+<customDefinitions>USE_SLIC:=1</customDefinitions>
+</cpuCode>
+<simulator>
+<deleteDRAM enabled="false"/>
+<maxDRAMSize enabled="false"/>
+<DRAMFile enabled="false"/>
+<socketName>DenseMatrixMul</socketName>
+<startStopScript enabled="false"/>
+<numberOfDevices>1</numberOfDevices>
+<ethernetOneEnabled enabled="false"/>
+<ipAddressOne/>
+<netmaskOne/>
+<pcapFileOne/>
+<ethernetTwoEnabled enabled="false"/>
+<ipAddressTwo/>
+<netmaskTwo/>
+<pcapFileTwo/>
+</simulator>
+</buildProfile>
