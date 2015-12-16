@@ -3,6 +3,7 @@
 #include <time.h>
 #include <MaxSLiCInterface.h>
 #include "Maxfiles.h"
+#include "dgemm.h"
 
 #define TILE_SIZE DGEMM_tileSize
 #define TILE_SIZE_2D (TILE_SIZE * TILE_SIZE)
