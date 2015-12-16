@@ -3,20 +3,15 @@
 #include <time.h>
 #include <MaxSLiCInterface.h>
 #include "Maxfiles.h"
+#include "dgemm.h"
 
 #define TILE_SIZE DGEMM_tileSize
 #define TILE_SIZE_2D (TILE_SIZE * TILE_SIZE)
 #define FREQUENCY DGEMM_frequency
 
-static size_t min(size_t a, size_t b) {
-	return (a < b) ? a : b;
-}
-
 static size_t sizeInTiles(size_t n) {
 	return (n + TILE_SIZE - 1) / TILE_SIZE;
 }
-
-//#define USE_BLAS
 
 #ifdef USE_BLAS
 #include <cblas.h>
@@ -92,7 +87,7 @@ int main(int argc, char** argv) {
 	double* Csw = calloc(m * n, sizeof(double));
 	double* Chw = calloc(m * n, sizeof(double));
 
-	printf("Matrix dimensions: m = %d, n = %d, k = %d\n", m, n, k);
+	printf("Matrix dimensions: m = %lu, n = %lu, k = %lu\n", m, n, k);
 
 	dgemm_init(m, n, k);
 
@@ -111,15 +106,15 @@ int main(int argc, char** argv) {
 	// add one tile to account for stream offset TODO measure pipeline depth properly?
 	printf("DFE predicted compute time: %f s\n", (dfePoints + TILE_SIZE_2D) / (((double) FREQUENCY) * 1e6));
 
-	for (int i = 0; i < m*k; ++i) {
+	for (size_t i = 0; i < m*k; ++i) {
 		A[i] = random() % 100;
 	}
 
-	for (int i = 0; i < k*n; ++i) {
+	for (size_t i = 0; i < k*n; ++i) {
 		B[i] = random() % 100;
 	}
 
-	for (int i = 0; i < m*n; ++i) {
+	for (size_t i = 0; i < m*n; ++i) {
 		Csw[i] = random() % 100;
 		Chw[i] = Csw[i];
 	}

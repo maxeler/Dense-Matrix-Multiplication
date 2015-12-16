@@ -4,6 +4,9 @@
 <boardModel type="CORIA"/>
 <simulation enabled="false"/>
 <enableMPCX enabled="false"/>
+<programArgument argument="MPPRStartCT" value="1"/>
+<programArgument argument="MPPREndCT" value="16"/>
+<programArgument argument="MPPRThreads" value="1"/>
 </common>
 <maxFiles>
 <maxFile buildName="DGEMM" buildOrUseExisting="build">
