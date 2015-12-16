@@ -90,7 +90,7 @@ int main(int argc, char** argv) {
 	double* Csw = calloc(m * n, sizeof(double));
 	double* Chw = calloc(m * n, sizeof(double));
 
-	printf("Matrix dimensions: m = %d, n = %d, k = %d\n", m, n, k);
+	printf("Matrix dimensions: m = %lu, n = %lu, k = %lu\n", m, n, k);
 
 	dgemm_init(m, n, k);
 
@@ -109,15 +109,15 @@ int main(int argc, char** argv) {
 	// add one tile to account for stream offset TODO measure pipeline depth properly?
 	printf("DFE predicted compute time: %f s\n", (dfePoints + TILE_SIZE_2D) / (((double) FREQUENCY) * 1e6));
 
-	for (int i = 0; i < m*k; ++i) {
+	for (size_t i = 0; i < m*k; ++i) {
 		A[i] = random() % 100;
 	}
 
-	for (int i = 0; i < k*n; ++i) {
+	for (size_t i = 0; i < k*n; ++i) {
 		B[i] = random() % 100;
 	}
 
-	for (int i = 0; i < m*n; ++i) {
+	for (size_t i = 0; i < m*n; ++i) {
 		Csw[i] = random() % 100;
 		Chw[i] = Csw[i];
 	}
