@@ -43,8 +43,6 @@ CXXFLAGS  = -Wall -Wextra $(O_FLAGS) -I$(RUNRULE_DIR)/include $(shell slic-confi
 LDFLAGS   = $(O_FLAGS) $(shell slic-config --libs) $(RUNRULE_LDFLAGS)
 
 #   Add other user-defined extensions here, e.g. --
-CFLAGS    += -I/home/imilankovic/opt/OpenBLAS/include/
-LDFLAGS += -L '/home/imilankovic/opt/OpenBLAS/lib'
 
 MAXFILES      = $(patsubst %.max,$(RUNRULE_DIR)/maxfiles/%.max, $(RUNRULE_MAXFILES))
 MAXFILES_OBJ  = $(patsubst %.max,$(RUNRULE_DIR)/objects/maxfiles/slic_%.o, $(RUNRULE_MAXFILES))
