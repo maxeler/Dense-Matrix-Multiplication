@@ -9,10 +9,6 @@
 #define TILE_SIZE_2D (TILE_SIZE * TILE_SIZE)
 #define FREQUENCY DGEMM_frequency
 
-static size_t min(size_t a, size_t b) {
-	return (a < b) ? a : b;
-}
-
 static size_t sizeInTiles(size_t n) {
 	return (n + TILE_SIZE - 1) / TILE_SIZE;
 }
