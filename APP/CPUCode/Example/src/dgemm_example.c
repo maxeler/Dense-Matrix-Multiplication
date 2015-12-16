@@ -16,8 +16,6 @@ static size_t sizeInTiles(size_t n) {
 	return (n + TILE_SIZE - 1) / TILE_SIZE;
 }
 
-//#define USE_BLAS
-
 #ifdef USE_BLAS
 #include <cblas.h>
 #endif
